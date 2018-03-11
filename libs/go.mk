@@ -1,3 +1,5 @@
+include libs/os.mk
+
 # GO env vars
 ifeq ($(GOPATH),)
 	GOPATH:=~/go
