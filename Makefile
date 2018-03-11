@@ -9,3 +9,5 @@ include libs/version.mk
 include libs/go.mk
 
 .DEFAULT_GOAL := help
+
+test: help printvars ## Test for travis-ci
