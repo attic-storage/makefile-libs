@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/rlespinasse/makefile-libs/compare/0.1.0...0.2.0) (2018-03-12)
+
+
+### Bug Fixes
+
+* **version:** get the latest content of VERSION during bump task ([4e3e7a0](https://github.com/rlespinasse/makefile-libs/commit/4e3e7a0))
+
+
+### Features
+
+* setup travis to bump version ([1e90be1](https://github.com/rlespinasse/makefile-libs/commit/1e90be1))
+* **version:** push a bumped version to a specific repository ([bb74fbd](https://github.com/rlespinasse/makefile-libs/commit/bb74fbd))
+
+
+
 <a name="0.1.0"></a>
 # 0.1.0 (2018-03-11)
 
