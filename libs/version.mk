@@ -1,5 +1,6 @@
 VERSION := $(shell head -n +1 VERSION)
 GITHASH := $(shell git rev-parse --short HEAD)
+GITBRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 VERSION_BUILDHASH = $(VERSION)-$(GITHASH)
 
 GITUNTRACKEDCHANGES := $(shell git status --porcelain --untracked-files=no)
@@ -16,8 +17,8 @@ ifeq ($(UNAME_S),Darwin)
 	SED_REGEXP_FLAG=-E
 endif
 
-
 FIRST_RELEASE?=false
+REPOSITORY?=origin
 bump: ## Bump your project version
 	@npm i -g standard-version
 	@echo '{"version": "$(VERSION)",' > package.json
@@ -28,6 +29,6 @@ bump: ## Bump your project version
 	git add -A .
 	git commit -q -am "chore: bump to $$(head -n +1 VERSION)"
 	git tag $$(head -n +1 VERSION)
-	git push -q origin HEAD $$(head -n +1 VERSION)
+	@git push -q $(REPOSITORY) master $$(head -n +1 VERSION)
 	
 	

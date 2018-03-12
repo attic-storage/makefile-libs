@@ -1,4 +1,16 @@
 language: node_js
 node_js:
-  - "node"
-after_success: make bump
+- node
+jobs:
+  include:
+    - stage: test
+      script: make test
+    - stage: deploy
+      script:
+        - git config --global user.email "romain.lespinasse@gmail.com"
+        - git config --global user.name "Romain Lespinasse"
+        - make bump REPOSITORY="https://${GH_TOKEN}@github.com/rlespinasse/makefile-libs.git"
+      if: branch = master
+env:
+  global:
+    secure: "XkVl6LkWnV5lH1y1WFHaOaNAiI1H6bAcjZAB8mpm3onahzv1SpwNNDnbZAAljPF60w1+8TtoLOiYL4nFnBlsVO/tTIQCgFOdfDRgVnqLYTImP9KQMbyoCZaVwVPEX2bjU3dtDvYwVNQ7du0l+TvyKJ5gS4sBd5fWo8Zh2cYZHbxAIPsYj+DGWm78gagqzvm5tBKvApUABR4elOO2yPMfIyqbwpLAr8yLrwXZHQZsKdbz2mxi2MuIq7XiMvHesv8wl05hpwHrmgWwAQ9ELzNMcqUGXIVAe1jUNkdI5aCvRppKIziJ95UICEn6d9Y/zdhd1QAEfaBq9HNH9kdyEZkCs7IrsmPZ5OWQfnMktrRt5OddRQAcmt+OHDeknuZ9nvePqDuA7NEnXerH9OrmpNychAAgdJ3l/HVQK/5SnG9wzsejW6I9aejv7GxhHel2J0RJoxN3S0kdvb6+S9yRflA0tGW9hvII3XCluhiZq/3T0ich5nmByS9VGMWyiOsVGpQ0+bZ+gPxbcK3SeRVlwkeuFuEdujYSIBpnRySaMwjd5x58xfuGOlzg5K08DfEbMXtOvNaIwpQlb3ynbV0sFWYzvTHtr84JPjRr4HkTX0mOkYoTx4Kiw7ZyI8QGUiUkrAnzaY+UMs+9TGwhB8XhRc5xXNtUdWGuBINyH76OCUdZQP8="
