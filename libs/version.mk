@@ -1,5 +1,4 @@
-VERSION := $(shell cat VERSION)
-FRESH_VERSION = $(shell cat VERSION)
+VERSION := $(shell head -n +1 VERSION)
 GITHASH := $(shell git rev-parse --short HEAD)
 VERSION_BUILDHASH = $(VERSION)-$(GITHASH)
 
@@ -23,13 +22,12 @@ bump: ## Bump your project version
 	@npm i -g standard-version
 	@echo '{"version": "$(VERSION)",' > package.json
 	@echo '"standard-version": {"skip": {"commit": true,"tag": true}}}' >> package.json
-
-	@standard-version $(if $(filter true,$(FIRST_RELEASE)),--first-release,)
+	standard-version $(if $(filter true,$(FIRST_RELEASE)),--first-release,)
 	@cat package.json | grep '"version"' | sed $(SED_REGEXP_FLAG) 's/^.*"version": *"(.*)".*/\1/' > VERSION
 	@rm -rf package.json
-	@git add -A .
-	@git commit -q -am "chore: bump to $(FRESH_VERSION)"
-	@git tag $(FRESH_VERSION)
-	@git push origin HEAD $(FRESH_VERSION)
+	git add -A .
+	git commit -q -am "chore: bump to $$(head -n +1 VERSION)"
+	git tag $$(head -n +1 VERSION)
+	git push -q origin HEAD $$(head -n +1 VERSION)
 	
 	
