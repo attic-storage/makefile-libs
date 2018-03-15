@@ -22,13 +22,12 @@ REPOSITORY?=origin
 RELEASE_BRANCH?=master
 bump: ## Bump your project version
 	@npm i -g standard-version
-	@echo '{"version": "$(VERSION)",' > package.json
-	@echo '"standard-version": {"skip": {"commit": true,"tag": true}}}' >> package.json
-	standard-version $(if $(filter true,$(FIRST_RELEASE)),--first-release,)
+	@echo '{"version": "$(VERSION)"}' > package.json
+	standard-version $(if $(filter true,$(FIRST_RELEASE)),--first-release,) --skip.commit --skip.tag
 	@cat package.json | grep '"version"' | sed $(SED_REGEXP_FLAG) 's/^.*"version": *"(.*)".*/\1/' > VERSION
 	@rm -rf package.json
 	git add -A .
 	git commit -am "chore: bump to $$(head -n +1 VERSION) [ci skip]"
 	git tag $$(head -n +1 VERSION)
 	git push $(REPOSITORY) $(GITBRANCH):$(RELEASE_BRANCH) $$(head -n +1 VERSION)
-	
+
